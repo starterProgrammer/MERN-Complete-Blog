@@ -16,6 +16,11 @@ require('dotenv').config()
 const app = express()
 
 
+// Varriables 
+const PORT = process.env.PORT || 9000
+const db_url = process.env.MONGODB_URI
+
+
 // middleware configuration 
 app.use(morgan('dev'))
 app.use(bodyParser.json({ limit: "5mb" }))
@@ -27,9 +32,19 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser())
 app.use(cors())
 
+/*
+    Connect to DB
+    username = mernblogdb
+    password = ali23fatemeh
+*/
+mongoose.connect(db_url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+}).then(() => console.log("DB is connected")).catch(console.error())
 
-// Varriables 
-const PORT = process.env.PORT || 9000
+
 
 // Create Express Server 
 
